@@ -22,19 +22,19 @@ h1{font-size:22px;font-weight:600;color:#1B3A5C;margin-bottom:4px}
 .tag-count .num{font-size:20px;font-weight:600}
 .tag-count .lbl{font-size:10px;color:#888}
 .matrix-wrap{position:relative;width:100%;aspect-ratio:1.6/1;min-height:240px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;overflow:hidden;margin-bottom:10px}
-.matrix-bg{position:absolute;inset:0}
 .zone{position:absolute;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px}
-.zone-label{font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.5}
+.zone-label{font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.55}
 .zone-sub{font-size:9px;opacity:.35;text-align:center;max-width:90%}
 .axis-label{position:absolute;font-size:10px;font-weight:600;color:#888;letter-spacing:.5px}
-.dot{position:absolute;width:18px;height:18px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1),background .3s;z-index:5}
-.dot-label{position:absolute;font-size:10px;font-weight:600;color:#1B3A5C;white-space:nowrap;transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:5;background:rgba(255,255,255,.85);padding:1px 6px;border-radius:4px}
-.crosshair-h,.crosshair-v{position:absolute;background:rgba(0,0,0,.08);transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:3}
-.crosshair-h{height:1px;left:0;right:0}
-.crosshair-v{width:1px;top:0;bottom:0}
+.dot{position:absolute;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1),background .3s;z-index:5}
+.dot-label{position:absolute;font-size:11px;font-weight:600;color:#1B3A5C;white-space:nowrap;transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:5;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.crosshair-h,.crosshair-v{position:absolute;transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:3}
+.crosshair-h{height:1px;left:0;right:0;background:rgba(0,0,0,.1)}
+.crosshair-v{width:1px;top:0;bottom:0;background:rgba(0,0,0,.1)}
 .innovation-pills{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:3px;z-index:4}
 .inno-pill{font-size:7px;padding:2px 5px;border-radius:3px;font-weight:600;opacity:.7}
-.result-desc{padding:8px 14px;border-radius:8px;font-size:13px;line-height:1.5;margin-bottom:8px}
+.result-desc{padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.5;margin-bottom:8px}
+.warn-box{padding:8px 14px;border-radius:8px;font-size:12px;line-height:1.5;margin-bottom:8px;border:1px dashed}
 .progress-bar{height:4px;background:#e0e0e0;border-radius:2px;overflow:hidden}
 .progress-fill{height:4px;border-radius:2px;transition:width .3s}
 .progress-text{font-size:11px;color:#999;margin-top:4px}
@@ -78,7 +78,7 @@ const questions=[
 {s:3,l:"Mevcut stratejik hedeflerin ölçeklendirilmesine katkı sağlıyor",t:"Grow"},
 {s:5,l:"Yeni bir stratejik yön veya iş modeli oluşturuyor",t:"Transform"}]},
 {id:2,dim:"Değer Önermesi",src:"Gartner RGT / HSBC",w:15,q:"Projenin yarattığı değerin doğası nedir?",opts:[
-{s:1,l:"Mevcut değeri koruma — yapılmazsa iş aksayacak",t:"RTB"},
+{s:1,l:"Mevcut değeri koruma — yapılmazsa iş aksayacak (KTLO)",t:"RTB"},
 {s:2,l:"Risk azaltma veya uyumluluk sağlama (yasal, güvenlik)",t:"RTB"},
 {s:3,l:"Mevcut gelir/verimliliği artırma — aynı müşteri, aynı pazar",t:"Grow"},
 {s:4,l:"Mevcut müşterilere yeni ürün/hizmet sunma",t:"Grow"},
@@ -120,8 +120,8 @@ const questions=[
 {s:4,l:"Kullanıcı benimseme, NPS — öncü (leading) göstergeler",t:"Transform"},
 {s:5,l:"Hipotez doğrulama oranı + kill criteria (Go/No-Go)",t:"Transform"}]},
 {id:9,dim:"Bütçeleme Modeli",src:"Gartner Stage-Gate",w:5,q:"Proje için en uygun bütçeleme yaklaşımı hangisi?",opts:[
-{s:1,l:"Yıllık operasyonel bütçe içinde — ayrı onay gerekmez (İç kaynak ve şirkete tahsis edilen dış kaynakç",t:"RTB"},
-{s:2,l:"Sabit bütçe — kapsam ve maliyet baştan belirli (3. Parti Çözümler)",t:"RTB"},
+{s:1,l:"Yıllık operasyonel bütçe içinde — ayrı onay gerekmez (İç kaynak ve şirkete tahsis edilmiş dış kaynak)",t:"RTB"},
+{s:2,l:"Sabit bütçe — kapsam ve maliyet baştan belirli (3. kaynak çözümler)",t:"RTB"},
 {s:3,l:"Proje bazlı bütçe — business case onayı sonrası tahsis",t:"Grow"},
 {s:4,l:"Aşama bazlı (stage-gate) — her faz için ayrı onay",t:"Transform"},
 {s:5,l:"Discovery fonlaması — küçük başlangıç, pivot/kill opsiyonu",t:"Transform"}]},
@@ -134,12 +134,39 @@ const answers={};
 const tagColors={RTB:"#548235",Grow:"#C55A11",Transform:"#7030A0"};
 const tagBg={RTB:"#EAF3DE",Grow:"#FAEEDA",Transform:"#EEEDFE"};
 
-function classify(ws,q5,q10){
+function countTags(){
+  const c={RTB:0,Grow:0,Transform:0};
+  questions.forEach(q=>{if(answers[q.id]!==undefined){const o=q.opts.find(o=>o.s===answers[q.id]);if(o&&o.t&&c[o.t]!==undefined)c[o.t]++;}});
+  return c;
+}
+
+function classify(ws,q5,q10,tags){
   let adj=ws+(q10||0);
-  if(adj<=2){if((q5||1)<=2)return{cls:"RTB-1",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-1 (Rutin)",desc:"Günlük operasyonel bakım. Kanban ile yönetilebilir. Doğrudan portföye alınır."};return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme. Doğrudan portföye alınır."};}
-  if(adj<=2.6){if((q5||1)>=3)return{cls:"RTB-3",color:"#C00000",bg:"#FCEBEB",label:"RTB-3 (Çoklu Birim)",desc:"Çoklu birim etkisi. G3 mini fizibilite gerekir."};return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme."};}
-  if(adj<=3.4)return{cls:"CTB-Grow",color:tagColors.Grow,bg:tagBg.Grow,label:"CTB-Grow",desc:"Mevcut pazarda büyüme. Agile/Scrum, proje bazlı bütçeleme. G3 fizibilite şart."};
-  return{cls:"CTB-Transform",color:tagColors.Transform,bg:tagBg.Transform,label:"CTB-Transform",desc:"Stratejik dönüşüm. Keşif → MVP → Ölçekleme, stage-gate fonlama, kill criteria. G3 zorunlu."};
+  
+  // Tag majority cross-check: if one tag has 70%+ of weighted answers,
+  // it acts as a guardrail against score anomalies
+  const totalTagged=tags.RTB+tags.Grow+tags.Transform;
+  const majorityThreshold=0.65;
+  
+  // If score says Transform but Grow dominates tags → cap at Grow
+  if(adj>3.40 && totalTagged>0 && (tags.Grow/totalTagged)>=majorityThreshold && tags.Transform<=2){
+    adj=Math.min(adj,3.40);
+  }
+  // If score says Grow but RTB dominates tags → cap at RTB range
+  if(adj>2.60 && totalTagged>0 && (tags.RTB/totalTagged)>=majorityThreshold && tags.Grow<=1){
+    adj=Math.min(adj,2.60);
+  }
+  
+  if(adj<=2.0){
+    if((q5||1)<=2)return{cls:"RTB-1",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-1 (Rutin)",desc:"Günlük operasyonel bakım. Kanban ile yönetilebilir. Doğrudan portföye alınır.",adj:adj};
+    return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme. Doğrudan portföye alınır.",adj:adj};
+  }
+  if(adj<=2.6){
+    if((q5||1)>=3)return{cls:"RTB-3",color:"#C00000",bg:"#FCEBEB",label:"RTB-3 (Çoklu Birim)",desc:"Çoklu birim etkisi. G3 mini fizibilite gerekir.",adj:adj};
+    return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme.",adj:adj};
+  }
+  if(adj<=3.4)return{cls:"CTB-Grow",color:tagColors.Grow,bg:tagBg.Grow,label:"CTB-Grow",desc:"Mevcut pazarda büyüme. Agile/Scrum, proje bazlı bütçeleme. G3 fizibilite şart.",adj:adj};
+  return{cls:"CTB-Transform",color:tagColors.Transform,bg:tagBg.Transform,label:"CTB-Transform",desc:"Stratejik dönüşüm. Keşif → MVP → Ölçekleme, stage-gate fonlama, kill criteria. G3 zorunlu.",adj:adj};
 }
 
 function compute(){
@@ -148,32 +175,23 @@ function compute(){
   const wSum=scored.reduce((s,q)=>s+answers[q.id]*q.w,0);
   const wTot=scored.reduce((s,q)=>s+q.w,0);
   const ws=wSum/wTot;
-  return{score:ws,cls:classify(ws,answers[5],answers[10]),answered:scored.length,total:questions.filter(q=>q.w>0).length};
+  const tags=countTags();
+  const cls=classify(ws,answers[5],answers[10],tags);
+  return{score:ws,cls:cls,answered:scored.length,total:questions.filter(q=>q.w>0).length,rawScore:ws,adjScore:cls.adj};
 }
 
 function computeAxes(){
-  // X axis: İş modeli değişim yoğunluğu (S6 iş modeli, S2 değer, S3 pazar)
-  // Y axis: İnovasyon derinliği (S1 strateji, S4 teknoloji, S7 belirsizlik)
-  const xQs=[6,2,3], yQs=[1,4,7];
+  const xQs=[6,2,3],yQs=[1,4,7];
   let xSum=0,xCnt=0,ySum=0,yCnt=0;
   xQs.forEach(id=>{if(answers[id]!==undefined){xSum+=answers[id];xCnt++;}});
   yQs.forEach(id=>{if(answers[id]!==undefined){ySum+=answers[id];yCnt++;}});
-  const x=xCnt?xSum/xCnt:null;
-  const y=yCnt?ySum/yCnt:null;
-  return{x,y};
-}
-
-function countTags(){
-  const c={RTB:0,Grow:0,Transform:0};
-  questions.forEach(q=>{if(answers[q.id]!==undefined){const o=q.opts.find(o=>o.s===answers[q.id]);if(o&&o.t&&c[o.t]!==undefined)c[o.t]++;}});
-  return c;
+  return{x:xCnt?xSum/xCnt:null,y:yCnt?ySum/yCnt:null};
 }
 
 function getInnovationTypes(){
   const scored=questions.filter(q=>q.w>0&&answers[q.id]!==undefined);
   if(!scored.length)return[];
   const avg=scored.reduce((s,q)=>s+answers[q.id],0)/scored.length;
-  const types=[];
   const all=["Product Performance","Profit Model","Network","Structure","Process","Product System","Channel","Brand","Customer Engagement","Service"];
   if(avg<=2)return all.slice(0,2);
   if(avg<=3.4)return all.slice(0,4);
@@ -182,35 +200,44 @@ function getInnovationTypes(){
 
 function renderMatrix(res){
   const axes=computeAxes();
-  const pad=40;
   const hasData=axes.x!==null||axes.y!==null;
   const xNorm=axes.x!==null?((axes.x-1)/4):0.15;
   const yNorm=axes.y!==null?((axes.y-1)/4):0.15;
   const dotColor=res?res.cls.color:"#999";
   const innoTypes=getInnovationTypes();
 
+  // Zone boundaries aligned with score thresholds:
+  // 1.0-2.3 = Core (RTB), 2.3-3.7 = Adjacent (Grow), 3.7-5.0 = Transform
+  // Normalized: 0-32.5% = Core, 32.5-67.5% = Adjacent, 67.5-100% = Transform
+  const zLow=32.5, zHigh=67.5;
+
   let h=`<div class="matrix-wrap"><div class="matrix-bg">`;
 
-  // Zone backgrounds
-  h+=`<div class="zone" style="left:0;top:66.6%;width:33.3%;height:33.4%;background:#EAF3DE">
-    <span class="zone-label" style="color:#548235">CORE</span><span class="zone-sub" style="color:#548235">RTB-1 / RTB-2</span></div>`;
-  h+=`<div class="zone" style="left:33.3%;top:66.6%;width:66.7%;height:33.4%;background:#F5F9F0">
-    <span class="zone-sub" style="color:#548235">RTB-3</span></div>`;
-  h+=`<div class="zone" style="left:0;top:33.3%;width:33.3%;height:33.3%;background:#FEF8F0">
-    <span class="zone-sub" style="color:#C55A11">Grow (1)</span></div>`;
-  h+=`<div class="zone" style="left:33.3%;top:33.3%;width:66.7%;height:33.3%;background:#FAEEDA">
-    <span class="zone-label" style="color:#C55A11">ADJACENT</span><span class="zone-sub" style="color:#C55A11">CTB-Grow</span></div>`;
-  h+=`<div class="zone" style="left:0;top:0;width:33.3%;height:33.3%;background:#F5F0FA">
-    <span class="zone-sub" style="color:#7030A0">Transform (1)</span></div>`;
-  h+=`<div class="zone" style="left:33.3%;top:0;width:66.7%;height:33.3%;background:#EEEDFE">
-    <span class="zone-label" style="color:#7030A0">TRANSFORMATIONAL</span><span class="zone-sub" style="color:#7030A0">CTB-Transform</span></div>`;
+  // Zone backgrounds — 3x3 grid
+  // Bottom-left: Core
+  h+=`<div class="zone" style="left:0;top:${zHigh}%;width:${zLow}%;height:${100-zHigh}%;background:#E0ECDA"><span class="zone-label" style="color:#548235">CORE</span><span class="zone-sub" style="color:#548235">RTB-1 / RTB-2</span></div>`;
+  // Bottom-mid: RTB-3 transition
+  h+=`<div class="zone" style="left:${zLow}%;top:${zHigh}%;width:${zHigh-zLow}%;height:${100-zHigh}%;background:#ECF2E6"><span class="zone-sub" style="color:#548235">RTB-3</span></div>`;
+  // Bottom-right
+  h+=`<div class="zone" style="left:${zHigh}%;top:${zHigh}%;width:${100-zHigh}%;height:${100-zHigh}%;background:#F5F0E8"><span class="zone-sub" style="color:#C55A11;opacity:.3">geçiş</span></div>`;
+  // Mid-left
+  h+=`<div class="zone" style="left:0;top:${100-zHigh}%;width:${zLow}%;height:${zHigh-zLow}%;background:#F5F0E8"><span class="zone-sub" style="color:#C55A11;opacity:.3">geçiş</span></div>`;
+  // Mid-mid: Adjacent (Grow)
+  h+=`<div class="zone" style="left:${zLow}%;top:${100-zHigh}%;width:${zHigh-zLow}%;height:${zHigh-zLow}%;background:#FAEEDA"><span class="zone-label" style="color:#C55A11">ADJACENT</span><span class="zone-sub" style="color:#C55A11">CTB-Grow</span></div>`;
+  // Mid-right
+  h+=`<div class="zone" style="left:${zHigh}%;top:${100-zHigh}%;width:${100-zHigh}%;height:${zHigh-zLow}%;background:#F3EDFA"><span class="zone-sub" style="color:#7030A0;opacity:.3">geçiş</span></div>`;
+  // Top-left
+  h+=`<div class="zone" style="left:0;top:0;width:${zLow}%;height:${100-zHigh}%;background:#F3EDFA"><span class="zone-sub" style="color:#7030A0;opacity:.3">geçiş</span></div>`;
+  // Top-mid
+  h+=`<div class="zone" style="left:${zLow}%;top:0;width:${zHigh-zLow}%;height:${100-zHigh}%;background:#F0EAFA"><span class="zone-sub" style="color:#7030A0;opacity:.3">geçiş</span></div>`;
+  // Top-right: Transformational
+  h+=`<div class="zone" style="left:${zHigh}%;top:0;width:${100-zHigh}%;height:${100-zHigh}%;background:#EEEDFE"><span class="zone-label" style="color:#7030A0">TRANSFORM</span><span class="zone-sub" style="color:#7030A0">CTB-Transform</span></div>`;
 
-  // Grid lines
-  for(let i=1;i<=4;i++){
-    const p1=(i/5)*100;
-    h+=`<div class="grid-line grid-line-h" style="top:${100-p1}%"></div>`;
-    h+=`<div class="grid-line grid-line-v" style="left:${p1}%"></div>`;
-  }
+  // Grid lines at zone boundaries
+  h+=`<div class="grid-line grid-line-h" style="top:${100-zHigh}%;background:rgba(0,0,0,.08)"></div>`;
+  h+=`<div class="grid-line grid-line-h" style="top:${zHigh}%;background:rgba(0,0,0,.08)"></div>`;
+  h+=`<div class="grid-line grid-line-v" style="left:${zLow}%;background:rgba(0,0,0,.08)"></div>`;
+  h+=`<div class="grid-line grid-line-v" style="left:${zHigh}%;background:rgba(0,0,0,.08)"></div>`;
 
   // Axis labels
   h+=`<div class="axis-label" style="bottom:4px;left:50%;transform:translateX(-50%)">İş modeli değişim yoğunluğu (S2, S3, S6) →</div>`;
@@ -222,32 +249,25 @@ function renderMatrix(res){
     h+=`<div class="tick" style="left:2px;bottom:${((i-1)/4)*100}%;transform:translateY(50%)">${i}</div>`;
   }
 
-  // Dot + crosshairs
   if(hasData){
-    const dotLeft=`calc(${xNorm*100}% - 9px)`;
-    const dotTop=`calc(${(1-yNorm)*100}% - 9px)`;
+    const dotLeft=`calc(${xNorm*100}% - 10px)`;
+    const dotTop=`calc(${(1-yNorm)*100}% - 10px)`;
     h+=`<div class="crosshair-h" style="top:${(1-yNorm)*100}%"></div>`;
     h+=`<div class="crosshair-v" style="left:${xNorm*100}%"></div>`;
     h+=`<div class="dot" style="left:${dotLeft};top:${dotTop};background:${dotColor}"></div>`;
-    h+=`<div class="dot-label" style="left:calc(${xNorm*100}% + 14px);top:calc(${(1-yNorm)*100}% - 10px)">${res?res.cls.label:"..."}</div>`;
+    h+=`<div class="dot-label" style="left:calc(${xNorm*100}% + 16px);top:calc(${(1-yNorm)*100}% - 12px)">${res?res.cls.label:"..."}</div>`;
   }else{
     h+=`<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4"><span style="font-size:13px;color:#bbb;background:rgba(255,255,255,.8);padding:6px 16px;border-radius:8px">Soruları yanıtladıkça proje burada konumlanacak</span></div>`;
   }
 
-  // Innovation type pills
   if(innoTypes.length>0){
     h+=`<div class="innovation-pills">`;
     const pillColors=["#2E75B6","#C55A11","#548235","#7030A0","#1B3A5C","#C00000"];
-    innoTypes.forEach((t,i)=>{
-      const pc=pillColors[i%pillColors.length];
-      h+=`<span class="inno-pill" style="background:${pc}20;color:${pc}">${t}</span>`;
-    });
+    innoTypes.forEach((t,i)=>{h+=`<span class="inno-pill" style="background:${pillColors[i%pillColors.length]}20;color:${pillColors[i%pillColors.length]}">${t}</span>`;});
     h+=`</div>`;
   }
 
   h+=`</div></div>`;
-
-  // Axis legend
   h+=`<div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-bottom:4px;padding:0 4px">
     <span>X: İş modeli değişimi</span><span>Y: İnovasyon derinliği</span>
     <span>Koordinat: (${axes.x!==null?axes.x.toFixed(1):"—"}, ${axes.y!==null?axes.y.toFixed(1):"—"})</span></div>`;
@@ -265,10 +285,10 @@ function render(){
     <div><h1>Proje sınıflandırma soru seti</h1>
     <p class="sub">Gartner RGT, HSBC RTB/CTB, Cisco Rapid Risk, Info-Tech, Execution Excellence, TBM/ITFM</p></div></div>`;
 
-  // Sticky panel
   html+=`<div class="sticky"><div class="sticky-top"><div class="score-block">`;
   if(res&&res.answered>0){
-    html+=`<div><div class="score-label">Ağırlıklı skor</div><div class="score-num" style="color:${res.cls.color}">${res.score.toFixed(2)}</div></div>
+    const showAdj=res.rawScore!==res.adjScore;
+    html+=`<div><div class="score-label">Ağırlıklı skor${showAdj?" (düzeltilmiş)":""}</div><div class="score-num" style="color:${res.cls.color}">${res.adjScore.toFixed(2)}</div>${showAdj?`<div style="font-size:10px;color:#aaa;text-decoration:line-through">${res.rawScore.toFixed(2)}</div>`:""}</div>
       <div class="divider"></div>
       <div><div class="score-label">Sınıflandırma</div><div class="badge" style="background:${res.cls.bg};color:${res.cls.color}">${res.cls.label}</div></div>`;
   }else{
@@ -280,15 +300,29 @@ function render(){
     ${["RTB","Grow","Transform"].map(k=>`<div class="tag-count"><div class="num" style="color:${tagColors[k]}">${tags[k]}</div><div class="lbl">${k}</div></div>`).join("")}
   </div></div>`;
 
-  // Matrix
   html+=renderMatrix(res);
 
-  // Result description
+  // Tag-score mismatch warning
+  if(res&&res.answered>=5){
+    const total=tags.RTB+tags.Grow+tags.Transform;
+    if(total>0){
+      const growPct=tags.Grow/total;
+      const rtbPct=tags.RTB/total;
+      if(res.rawScore!==res.adjScore){
+        const dominant=growPct>=0.65?"Grow":rtbPct>=0.65?"RTB":"";
+        if(dominant){
+          html+=`<div class="warn-box" style="background:#FFF8F0;border-color:#C55A11;color:#C55A11">
+            <strong>Düzeltme uygulandı:</strong> Ham skor ${res.rawScore.toFixed(2)} idi ancak cevapların %${Math.round((dominant==="Grow"?growPct:rtbPct)*100)}'${dominant==="Grow"?"i":"ü"} ${dominant} yönelimli. Skor ${res.adjScore.toFixed(2)} olarak düzeltildi.
+          </div>`;
+        }
+      }
+    }
+  }
+
   if(res&&res.answered>=9){
     html+=`<div class="result-desc" style="background:${res.cls.bg};color:${res.cls.color}">${res.cls.desc}</div>`;
   }
 
-  // Progress
   if(res){
     html+=`<div class="progress-bar"><div class="progress-fill" style="width:${(res.answered/res.total)*100}%;background:#2E75B6"></div></div>
       <div class="progress-text">${res.answered}/${res.total} soru yanıtlandı</div>`;
@@ -298,7 +332,6 @@ function render(){
   }
   html+=`</div>`;
 
-  // Questions
   questions.forEach((q,qi)=>{
     const ans=answers[q.id];
     html+=`<div class="q-card ${ans!==undefined?"answered":""}">
@@ -324,7 +357,8 @@ function render(){
     html+=`<button class="reset-btn" onclick="resetAll()">Sıfırla</button>`;
   }
 
-  html+=`<div class="footer"><strong>Matris eksenleri:</strong> X ekseni = İş modeli değişim yoğunluğu (S2 Değer + S3 Pazar + S6 İş Modeli ortalaması). Y ekseni = İnovasyon derinliği (S1 Strateji + S4 Teknoloji + S7 Risk ortalaması). Nokta her cevapla güncellenir.<br>
+  html+=`<div class="footer"><strong>Matris bölgeleri:</strong> Core (sol alt, skor ≤2.3) = RTB | Adjacent (orta, 2.3–3.7) = CTB-Grow | Transformational (sağ üst, 3.7+) = CTB-Transform. Geçiş bölgeleri açık tonla gösterilir.<br>
+  <strong>Tag çoğunluk koruması:</strong> Cevapların %65+ aynı yönelimde (orn. Grow) ise skor o sınıfın üst sınırını aşamaz — birkaç yüksek puanlı cevabın skoru Transform'a çekmesi engellenir.<br>
   <strong>Skor eşikleri:</strong> ≤2.0 → RTB-1/2 | 2.01–2.60 → RTB-2/3 | 2.61–3.40 → CTB-Grow | 3.41+ → CTB-Transform<br>
   <strong>Kaynaklar:</strong> Gartner RGT, HSBC, Cisco Rapid Risk, Info-Tech, Execution Excellence, TBM/ITFM</div>`;
 
@@ -335,9 +369,7 @@ function selectOpt(qid,score){
   answers[qid]=score;render();
   const cards=document.querySelectorAll(".q-card");
   const idx=questions.findIndex(q=>q.id===qid);
-  if(idx<questions.length-1){
-    setTimeout(()=>cards[idx+1]?.scrollIntoView({behavior:"smooth",block:"center"}),100);
-  }
+  if(idx<questions.length-1)setTimeout(()=>cards[idx+1]?.scrollIntoView({behavior:"smooth",block:"center"}),100);
 }
 function resetAll(){Object.keys(answers).forEach(k=>delete answers[k]);render();window.scrollTo({top:0,behavior:"smooth"});}
 
