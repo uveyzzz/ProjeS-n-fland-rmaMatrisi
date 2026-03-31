@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proje Sınıflandırma Soru Seti</title>
+<title>Proje Sınıflandırma Soru Seti v3</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#2c2c2a;line-height:1.6}
@@ -21,18 +21,24 @@ h1{font-size:22px;font-weight:600;color:#1B3A5C;margin-bottom:4px}
 .tag-count{text-align:center;min-width:50px}
 .tag-count .num{font-size:20px;font-weight:600}
 .tag-count .lbl{font-size:10px;color:#888}
-.matrix-wrap{position:relative;width:100%;aspect-ratio:1.6/1;min-height:240px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;overflow:hidden;margin-bottom:10px}
+.matrix-outer{margin-bottom:16px}
+.matrix-wrap{position:relative;width:100%;aspect-ratio:1.6/1;min-height:240px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;overflow:hidden;margin-left:28px;margin-top:4px}
+.y-label{position:absolute;left:0;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left center;white-space:nowrap;font-size:10px;font-weight:600;color:#888;letter-spacing:.3px}
+.x-label-row{display:flex;justify-content:space-between;align-items:center;padding:6px 4px 0 32px;font-size:10px;color:#aaa}
 .zone{position:absolute;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px}
-.zone-label{font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.55}
-.zone-sub{font-size:9px;opacity:.35;text-align:center;max-width:90%}
-.axis-label{position:absolute;font-size:10px;font-weight:600;color:#888;letter-spacing:.5px}
+.zone-label{font-size:12px;font-weight:700;letter-spacing:.5px;opacity:.6}
+.zone-sub{font-size:10px;opacity:.4;text-align:center}
 .dot{position:absolute;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1),background .3s;z-index:5}
-.dot-label{position:absolute;font-size:11px;font-weight:600;color:#1B3A5C;white-space:nowrap;transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:5;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.dot-label{position:absolute;font-size:11px;font-weight:600;color:#1B3A5C;white-space:nowrap;transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:5;background:rgba(255,255,255,.92);padding:2px 8px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
 .crosshair-h,.crosshair-v{position:absolute;transition:left .5s cubic-bezier(.4,0,.2,1),top .5s cubic-bezier(.4,0,.2,1);z-index:3}
-.crosshair-h{height:1px;left:0;right:0;background:rgba(0,0,0,.1)}
-.crosshair-v{width:1px;top:0;bottom:0;background:rgba(0,0,0,.1)}
+.crosshair-h{height:1px;left:0;right:0;background:rgba(0,0,0,.08)}
+.crosshair-v{width:1px;top:0;bottom:0;background:rgba(0,0,0,.08)}
 .innovation-pills{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:3px;z-index:4}
 .inno-pill{font-size:7px;padding:2px 5px;border-radius:3px;font-weight:600;opacity:.7}
+.grid-line{position:absolute;background:rgba(0,0,0,.06)}
+.grid-line-h{height:1px;left:0;right:0}
+.grid-line-v{width:1px;top:0;bottom:0}
+.tick{position:absolute;font-size:8px;color:#bbb;font-weight:500}
 .result-desc{padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.5;margin-bottom:8px}
 .warn-box{padding:8px 14px;border-radius:8px;font-size:12px;line-height:1.5;margin-bottom:8px;border:1px dashed}
 .progress-bar{height:4px;background:#e0e0e0;border-radius:2px;overflow:hidden}
@@ -51,7 +57,7 @@ h1{font-size:22px;font-weight:600;color:#1B3A5C;margin-bottom:4px}
 .opt-btn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 14px;border:1px solid #e0e0e0;border-radius:8px;background:#fff;cursor:pointer;text-align:left;font-size:13px;color:#2c2c2a;line-height:1.4;margin-bottom:5px;transition:all .15s}
 .opt-btn:hover{background:#f8f8f8}
 .opt-btn.sel{border-width:2px}
-.radio{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;transition:border-color .15s}
+.radio{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center}
 .radio .rdot{width:8px;height:8px;border-radius:50%;display:none}
 .opt-btn.sel .radio .rdot{display:block}
 .opt-label{flex:1}
@@ -60,12 +66,9 @@ h1{font-size:22px;font-weight:600;color:#1B3A5C;margin-bottom:4px}
 .reset-btn:hover{background:#f0f0f0}
 .footer{margin-top:20px;padding:12px 16px;background:#f0f0f0;border-radius:8px;font-size:11px;color:#888;line-height:1.7}
 .footer strong{color:#666}
-.grid-line{position:absolute;background:rgba(0,0,0,.04)}
-.grid-line-h{height:1px;left:0;right:0}
-.grid-line-v{width:1px;top:0;bottom:0}
-.tick{position:absolute;font-size:8px;color:#bbb;font-weight:500}
+.empty-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;font-size:13px;color:#bbb}
+.empty-hint span{background:rgba(255,255,255,.8);padding:6px 16px;border-radius:8px}
 @media(max-width:600px){.sticky-top{flex-direction:column;align-items:flex-start}.tag-counts{margin-top:8px}.matrix-wrap{aspect-ratio:1.4/1;min-height:200px}}
-@media print{.sticky{position:relative}.wrap{max-width:100%}body{background:#fff}}
 </style>
 </head>
 <body>
@@ -120,8 +123,8 @@ const questions=[
 {s:4,l:"Kullanıcı benimseme, NPS — öncü (leading) göstergeler",t:"Transform"},
 {s:5,l:"Hipotez doğrulama oranı + kill criteria (Go/No-Go)",t:"Transform"}]},
 {id:9,dim:"Bütçeleme Modeli",src:"Gartner Stage-Gate",w:5,q:"Proje için en uygun bütçeleme yaklaşımı hangisi?",opts:[
-{s:1,l:"Yıllık operasyonel bütçe içinde — ayrı onay gerekmez (İç kaynak ve şirkete tahsis edilmiş dış kaynak)",t:"RTB"},
-{s:2,l:"Sabit bütçe — kapsam ve maliyet baştan belirli (3. kaynak çözümler)",t:"RTB"},
+{s:1,l:"Yıllık operasyonel bütçe içinde — ayrı onay gerekmez",t:"RTB"},
+{s:2,l:"Sabit bütçe — kapsam ve maliyet baştan belirli",t:"RTB"},
 {s:3,l:"Proje bazlı bütçe — business case onayı sonrası tahsis",t:"Grow"},
 {s:4,l:"Aşama bazlı (stage-gate) — her faz için ayrı onay",t:"Transform"},
 {s:5,l:"Discovery fonlaması — küçük başlangıç, pivot/kill opsiyonu",t:"Transform"}]},
@@ -142,31 +145,19 @@ function countTags(){
 
 function classify(ws,q5,q10,tags){
   let adj=ws+(q10||0);
-  
-  // Tag majority cross-check: if one tag has 70%+ of weighted answers,
-  // it acts as a guardrail against score anomalies
-  const totalTagged=tags.RTB+tags.Grow+tags.Transform;
-  const majorityThreshold=0.65;
-  
-  // If score says Transform but Grow dominates tags → cap at Grow
-  if(adj>3.40 && totalTagged>0 && (tags.Grow/totalTagged)>=majorityThreshold && tags.Transform<=2){
-    adj=Math.min(adj,3.40);
-  }
-  // If score says Grow but RTB dominates tags → cap at RTB range
-  if(adj>2.60 && totalTagged>0 && (tags.RTB/totalTagged)>=majorityThreshold && tags.Grow<=1){
-    adj=Math.min(adj,2.60);
-  }
-  
+  const tot=tags.RTB+tags.Grow+tags.Transform;
+  if(adj>3.40&&tot>0&&(tags.Grow/tot)>=0.65&&tags.Transform<=2) adj=Math.min(adj,3.40);
+  if(adj>2.60&&tot>0&&(tags.RTB/tot)>=0.65&&tags.Grow<=1) adj=Math.min(adj,2.60);
   if(adj<=2.0){
-    if((q5||1)<=2)return{cls:"RTB-1",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-1 (Rutin)",desc:"Günlük operasyonel bakım. Kanban ile yönetilebilir. Doğrudan portföye alınır.",adj:adj};
-    return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme. Doğrudan portföye alınır.",adj:adj};
+    if((q5||1)<=2)return{cls:"RTB-1",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-1 (Rutin)",desc:"Günlük operasyonel bakım. Kanban ile yönetilebilir. Doğrudan portföye alınır.",adj};
+    return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme. Doğrudan portföye alınır.",adj};
   }
   if(adj<=2.6){
-    if((q5||1)>=3)return{cls:"RTB-3",color:"#C00000",bg:"#FCEBEB",label:"RTB-3 (Çoklu Birim)",desc:"Çoklu birim etkisi. G3 mini fizibilite gerekir.",adj:adj};
-    return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme.",adj:adj};
+    if((q5||1)>=3)return{cls:"RTB-3",color:"#C00000",bg:"#FCEBEB",label:"RTB-3 (Çoklu Birim)",desc:"Çoklu birim etkisi. G3 mini fizibilite gerekir.",adj};
+    return{cls:"RTB-2",color:tagColors.RTB,bg:tagBg.RTB,label:"RTB-2 (Birim İçi)",desc:"Tek birimi etkileyen orta ölçekli iyileştirme.",adj};
   }
-  if(adj<=3.4)return{cls:"CTB-Grow",color:tagColors.Grow,bg:tagBg.Grow,label:"CTB-Grow",desc:"Mevcut pazarda büyüme. Agile/Scrum, proje bazlı bütçeleme. G3 fizibilite şart.",adj:adj};
-  return{cls:"CTB-Transform",color:tagColors.Transform,bg:tagBg.Transform,label:"CTB-Transform",desc:"Stratejik dönüşüm. Keşif → MVP → Ölçekleme, stage-gate fonlama, kill criteria. G3 zorunlu.",adj:adj};
+  if(adj<=3.4)return{cls:"CTB-Grow",color:tagColors.Grow,bg:tagBg.Grow,label:"CTB-Grow",desc:"Mevcut pazarda büyüme. Agile/Scrum, proje bazlı bütçeleme. G3 fizibilite şart.",adj};
+  return{cls:"CTB-Transform",color:tagColors.Transform,bg:tagBg.Transform,label:"CTB-Transform",desc:"Stratejik dönüşüm. Keşif → MVP → Ölçekleme, stage-gate fonlama, kill criteria. G3 zorunlu.",adj};
 }
 
 function compute(){
@@ -177,22 +168,22 @@ function compute(){
   const ws=wSum/wTot;
   const tags=countTags();
   const cls=classify(ws,answers[5],answers[10],tags);
-  return{score:ws,cls:cls,answered:scored.length,total:questions.filter(q=>q.w>0).length,rawScore:ws,adjScore:cls.adj};
+  return{score:ws,cls,answered:scored.length,total:questions.filter(q=>q.w>0).length,rawScore:ws,adjScore:cls.adj};
 }
 
 function computeAxes(){
   const xQs=[6,2,3],yQs=[1,4,7];
-  let xSum=0,xCnt=0,ySum=0,yCnt=0;
-  xQs.forEach(id=>{if(answers[id]!==undefined){xSum+=answers[id];xCnt++;}});
-  yQs.forEach(id=>{if(answers[id]!==undefined){ySum+=answers[id];yCnt++;}});
-  return{x:xCnt?xSum/xCnt:null,y:yCnt?ySum/yCnt:null};
+  let xS=0,xC=0,yS=0,yC=0;
+  xQs.forEach(id=>{if(answers[id]!==undefined){xS+=answers[id];xC++;}});
+  yQs.forEach(id=>{if(answers[id]!==undefined){yS+=answers[id];yC++;}});
+  return{x:xC?xS/xC:null,y:yC?yS/yC:null};
 }
 
-function getInnovationTypes(){
-  const scored=questions.filter(q=>q.w>0&&answers[q.id]!==undefined);
-  if(!scored.length)return[];
-  const avg=scored.reduce((s,q)=>s+answers[q.id],0)/scored.length;
-  const all=["Product Performance","Profit Model","Network","Structure","Process","Product System","Channel","Brand","Customer Engagement","Service"];
+function getInnoTypes(){
+  const sc=questions.filter(q=>q.w>0&&answers[q.id]!==undefined);
+  if(!sc.length)return[];
+  const avg=sc.reduce((s,q)=>s+answers[q.id],0)/sc.length;
+  const all=["Product Perf.","Profit Model","Network","Structure","Process","Product System"];
   if(avg<=2)return all.slice(0,2);
   if(avg<=3.4)return all.slice(0,4);
   return all.slice(0,6);
@@ -201,77 +192,76 @@ function getInnovationTypes(){
 function renderMatrix(res){
   const axes=computeAxes();
   const hasData=axes.x!==null||axes.y!==null;
-  const xNorm=axes.x!==null?((axes.x-1)/4):0.15;
-  const yNorm=axes.y!==null?((axes.y-1)/4):0.15;
+  const xN=axes.x!==null?((axes.x-1)/4):0.15;
+  const yN=axes.y!==null?((axes.y-1)/4):0.15;
   const dotColor=res?res.cls.color:"#999";
-  const innoTypes=getInnovationTypes();
+  const inno=getInnoTypes();
 
-  // Zone boundaries aligned with score thresholds:
-  // 1.0-2.3 = Core (RTB), 2.3-3.7 = Adjacent (Grow), 3.7-5.0 = Transform
-  // Normalized: 0-32.5% = Core, 32.5-67.5% = Adjacent, 67.5-100% = Transform
-  const zLow=32.5, zHigh=67.5;
+  let h=`<div class="matrix-outer"><div style="position:relative">`;
+  // Y axis label outside matrix
+  h+=`<div class="y-label">İnovasyon derinliği (S1, S4, S7) →</div>`;
+  h+=`<div class="matrix-wrap">`;
 
-  let h=`<div class="matrix-wrap"><div class="matrix-bg">`;
+  // Simple 3-zone layout like v1 — no geçiş zones
+  // Bottom third: Core (RTB)
+  h+=`<div class="zone" style="left:0;top:66.6%;width:100%;height:33.4%;background:#E8F0E0">
+    <span class="zone-label" style="color:#548235">CORE</span>
+    <span class="zone-sub" style="color:#548235">RTB-1 / RTB-2 / RTB-3</span></div>`;
+  // Middle third: Adjacent (Grow)
+  h+=`<div class="zone" style="left:0;top:33.3%;width:100%;height:33.3%;background:#FDF3E0">
+    <span class="zone-label" style="color:#C55A11">ADJACENT</span>
+    <span class="zone-sub" style="color:#C55A11">CTB-Grow</span></div>`;
+  // Top third: Transformational
+  h+=`<div class="zone" style="left:0;top:0;width:100%;height:33.3%;background:#F0ECFA">
+    <span class="zone-label" style="color:#7030A0">TRANSFORMATIONAL</span>
+    <span class="zone-sub" style="color:#7030A0">CTB-Transform</span></div>`;
 
-  // Zone backgrounds — 3x3 grid
-  // Bottom-left: Core
-  h+=`<div class="zone" style="left:0;top:${zHigh}%;width:${zLow}%;height:${100-zHigh}%;background:#E0ECDA"><span class="zone-label" style="color:#548235">CORE</span><span class="zone-sub" style="color:#548235">RTB-1 / RTB-2</span></div>`;
-  // Bottom-mid: RTB-3 transition
-  h+=`<div class="zone" style="left:${zLow}%;top:${zHigh}%;width:${zHigh-zLow}%;height:${100-zHigh}%;background:#ECF2E6"><span class="zone-sub" style="color:#548235">RTB-3</span></div>`;
-  // Bottom-right
-  h+=`<div class="zone" style="left:${zHigh}%;top:${zHigh}%;width:${100-zHigh}%;height:${100-zHigh}%;background:#F5F0E8"><span class="zone-sub" style="color:#C55A11;opacity:.3">geçiş</span></div>`;
-  // Mid-left
-  h+=`<div class="zone" style="left:0;top:${100-zHigh}%;width:${zLow}%;height:${zHigh-zLow}%;background:#F5F0E8"><span class="zone-sub" style="color:#C55A11;opacity:.3">geçiş</span></div>`;
-  // Mid-mid: Adjacent (Grow)
-  h+=`<div class="zone" style="left:${zLow}%;top:${100-zHigh}%;width:${zHigh-zLow}%;height:${zHigh-zLow}%;background:#FAEEDA"><span class="zone-label" style="color:#C55A11">ADJACENT</span><span class="zone-sub" style="color:#C55A11">CTB-Grow</span></div>`;
-  // Mid-right
-  h+=`<div class="zone" style="left:${zHigh}%;top:${100-zHigh}%;width:${100-zHigh}%;height:${zHigh-zLow}%;background:#F3EDFA"><span class="zone-sub" style="color:#7030A0;opacity:.3">geçiş</span></div>`;
-  // Top-left
-  h+=`<div class="zone" style="left:0;top:0;width:${zLow}%;height:${100-zHigh}%;background:#F3EDFA"><span class="zone-sub" style="color:#7030A0;opacity:.3">geçiş</span></div>`;
-  // Top-mid
-  h+=`<div class="zone" style="left:${zLow}%;top:0;width:${zHigh-zLow}%;height:${100-zHigh}%;background:#F0EAFA"><span class="zone-sub" style="color:#7030A0;opacity:.3">geçiş</span></div>`;
-  // Top-right: Transformational
-  h+=`<div class="zone" style="left:${zHigh}%;top:0;width:${100-zHigh}%;height:${100-zHigh}%;background:#EEEDFE"><span class="zone-label" style="color:#7030A0">TRANSFORM</span><span class="zone-sub" style="color:#7030A0">CTB-Transform</span></div>`;
+  // Thin border lines between zones
+  h+=`<div style="position:absolute;left:0;right:0;top:33.3%;height:1px;background:rgba(0,0,0,.1)"></div>`;
+  h+=`<div style="position:absolute;left:0;right:0;top:66.6%;height:1px;background:rgba(0,0,0,.1)"></div>`;
 
-  // Grid lines at zone boundaries
-  h+=`<div class="grid-line grid-line-h" style="top:${100-zHigh}%;background:rgba(0,0,0,.08)"></div>`;
-  h+=`<div class="grid-line grid-line-h" style="top:${zHigh}%;background:rgba(0,0,0,.08)"></div>`;
-  h+=`<div class="grid-line grid-line-v" style="left:${zLow}%;background:rgba(0,0,0,.08)"></div>`;
-  h+=`<div class="grid-line grid-line-v" style="left:${zHigh}%;background:rgba(0,0,0,.08)"></div>`;
-
-  // Axis labels
-  h+=`<div class="axis-label" style="bottom:4px;left:50%;transform:translateX(-50%)">İş modeli değişim yoğunluğu (S2, S3, S6) →</div>`;
-  h+=`<div class="axis-label" style="left:4px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left center;white-space:nowrap">İnovasyon derinliği (S1, S4, S7) →</div>`;
+  // Light grid
+  for(let i=1;i<=4;i++){
+    const p=(i/5)*100;
+    h+=`<div class="grid-line grid-line-h" style="top:${100-p}%"></div>`;
+    h+=`<div class="grid-line grid-line-v" style="left:${p}%"></div>`;
+  }
 
   // Ticks
   for(let i=1;i<=5;i++){
-    h+=`<div class="tick" style="bottom:2px;left:${((i-1)/4)*100}%;transform:translateX(-50%)">${i}</div>`;
-    h+=`<div class="tick" style="left:2px;bottom:${((i-1)/4)*100}%;transform:translateY(50%)">${i}</div>`;
+    h+=`<div class="tick" style="bottom:3px;left:${((i-1)/4)*100}%;transform:translateX(-50%)">${i}</div>`;
+    h+=`<div class="tick" style="left:3px;bottom:${((i-1)/4)*100}%;transform:translateY(50%)">${i}</div>`;
   }
 
   if(hasData){
-    const dotLeft=`calc(${xNorm*100}% - 10px)`;
-    const dotTop=`calc(${(1-yNorm)*100}% - 10px)`;
-    h+=`<div class="crosshair-h" style="top:${(1-yNorm)*100}%"></div>`;
-    h+=`<div class="crosshair-v" style="left:${xNorm*100}%"></div>`;
-    h+=`<div class="dot" style="left:${dotLeft};top:${dotTop};background:${dotColor}"></div>`;
-    h+=`<div class="dot-label" style="left:calc(${xNorm*100}% + 16px);top:calc(${(1-yNorm)*100}% - 12px)">${res?res.cls.label:"..."}</div>`;
+    const dL=`calc(${xN*100}% - 10px)`;
+    const dT=`calc(${(1-yN)*100}% - 10px)`;
+    h+=`<div class="crosshair-h" style="top:${(1-yN)*100}%"></div>`;
+    h+=`<div class="crosshair-v" style="left:${xN*100}%"></div>`;
+    h+=`<div class="dot" style="left:${dL};top:${dT};background:${dotColor}"></div>`;
+    // Label: offset right, if too far right flip to left
+    const labelLeft=xN>0.75?`calc(${xN*100}% - 140px)`:`calc(${xN*100}% + 16px)`;
+    h+=`<div class="dot-label" style="left:${labelLeft};top:calc(${(1-yN)*100}% - 12px)">${res?res.cls.label:"..."}</div>`;
   }else{
-    h+=`<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4"><span style="font-size:13px;color:#bbb;background:rgba(255,255,255,.8);padding:6px 16px;border-radius:8px">Soruları yanıtladıkça proje burada konumlanacak</span></div>`;
+    h+=`<div class="empty-hint"><span>Soruları yanıtladıkça proje burada konumlanacak</span></div>`;
   }
 
-  if(innoTypes.length>0){
+  if(inno.length>0){
     h+=`<div class="innovation-pills">`;
-    const pillColors=["#2E75B6","#C55A11","#548235","#7030A0","#1B3A5C","#C00000"];
-    innoTypes.forEach((t,i)=>{h+=`<span class="inno-pill" style="background:${pillColors[i%pillColors.length]}20;color:${pillColors[i%pillColors.length]}">${t}</span>`;});
+    const pc=["#2E75B6","#C55A11","#548235","#7030A0","#1B3A5C","#C00000"];
+    inno.forEach((t,i)=>{h+=`<span class="inno-pill" style="background:${pc[i%pc.length]}20;color:${pc[i%pc.length]}">${t}</span>`;});
     h+=`</div>`;
   }
 
-  h+=`</div></div>`;
-  h+=`<div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-bottom:4px;padding:0 4px">
-    <span>X: İş modeli değişimi</span><span>Y: İnovasyon derinliği</span>
-    <span>Koordinat: (${axes.x!==null?axes.x.toFixed(1):"—"}, ${axes.y!==null?axes.y.toFixed(1):"—"})</span></div>`;
+  h+=`</div></div>`; // close matrix-wrap and position:relative
 
+  // Axis info row — separate line below matrix, no overlap
+  h+=`<div class="x-label-row">
+    <span>X: İş modeli değişimi (S2, S3, S6)</span>
+    <span>Y: İnovasyon derinliği (S1, S4, S7)</span>
+    <span>Koordinat: (${axes.x!==null?axes.x.toFixed(1):"—"}, ${axes.y!==null?axes.y.toFixed(1):"—"})</span>
+  </div>`;
+  h+=`</div>`; // close matrix-outer
   return h;
 }
 
@@ -279,7 +269,6 @@ function render(){
   const res=compute();
   const tags=countTags();
   const app=document.getElementById("app");
-
   let html=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
     <div style="width:6px;height:32px;background:#2E75B6;border-radius:3px"></div>
     <div><h1>Proje sınıflandırma soru seti</h1>
@@ -287,7 +276,7 @@ function render(){
 
   html+=`<div class="sticky"><div class="sticky-top"><div class="score-block">`;
   if(res&&res.answered>0){
-    const showAdj=res.rawScore!==res.adjScore;
+    const showAdj=Math.abs(res.rawScore-res.adjScore)>0.01;
     html+=`<div><div class="score-label">Ağırlıklı skor${showAdj?" (düzeltilmiş)":""}</div><div class="score-num" style="color:${res.cls.color}">${res.adjScore.toFixed(2)}</div>${showAdj?`<div style="font-size:10px;color:#aaa;text-decoration:line-through">${res.rawScore.toFixed(2)}</div>`:""}</div>
       <div class="divider"></div>
       <div><div class="score-label">Sınıflandırma</div><div class="badge" style="background:${res.cls.bg};color:${res.cls.color}">${res.cls.label}</div></div>`;
@@ -302,33 +291,21 @@ function render(){
 
   html+=renderMatrix(res);
 
-  // Tag-score mismatch warning
   if(res&&res.answered>=5){
-    const total=tags.RTB+tags.Grow+tags.Transform;
-    if(total>0){
-      const growPct=tags.Grow/total;
-      const rtbPct=tags.RTB/total;
-      if(res.rawScore!==res.adjScore){
-        const dominant=growPct>=0.65?"Grow":rtbPct>=0.65?"RTB":"";
-        if(dominant){
-          html+=`<div class="warn-box" style="background:#FFF8F0;border-color:#C55A11;color:#C55A11">
-            <strong>Düzeltme uygulandı:</strong> Ham skor ${res.rawScore.toFixed(2)} idi ancak cevapların %${Math.round((dominant==="Grow"?growPct:rtbPct)*100)}'${dominant==="Grow"?"i":"ü"} ${dominant} yönelimli. Skor ${res.adjScore.toFixed(2)} olarak düzeltildi.
-          </div>`;
-        }
-      }
+    const tot=tags.RTB+tags.Grow+tags.Transform;
+    if(tot>0&&Math.abs(res.rawScore-res.adjScore)>0.01){
+      const gP=tags.Grow/tot,rP=tags.RTB/tot;
+      const dom=gP>=0.65?"Grow":rP>=0.65?"RTB":"";
+      if(dom) html+=`<div class="warn-box" style="background:#FFF8F0;border-color:#C55A11;color:#C55A11">
+        <strong>Düzeltme uygulandı:</strong> Ham skor ${res.rawScore.toFixed(2)} idi ancak cevapların %${Math.round((dom==="Grow"?gP:rP)*100)}'${dom==="Grow"?"i":"ü"} ${dom} yönelimli. Skor ${res.adjScore.toFixed(2)} olarak düzeltildi.</div>`;
     }
   }
-
-  if(res&&res.answered>=9){
-    html+=`<div class="result-desc" style="background:${res.cls.bg};color:${res.cls.color}">${res.cls.desc}</div>`;
-  }
-
+  if(res&&res.answered>=9) html+=`<div class="result-desc" style="background:${res.cls.bg};color:${res.cls.color}">${res.cls.desc}</div>`;
   if(res){
     html+=`<div class="progress-bar"><div class="progress-fill" style="width:${(res.answered/res.total)*100}%;background:#2E75B6"></div></div>
       <div class="progress-text">${res.answered}/${res.total} soru yanıtlandı</div>`;
   }else{
-    html+=`<div class="progress-bar"><div class="progress-fill" style="width:0%;background:#2E75B6"></div></div>
-      <div class="progress-text">0/9 soru yanıtlandı</div>`;
+    html+=`<div class="progress-bar"><div class="progress-fill" style="width:0"></div></div><div class="progress-text">0/9 soru yanıtlandı</div>`;
   }
   html+=`</div>`;
 
@@ -352,16 +329,10 @@ function render(){
     });
     html+=`</div>`;
   });
-
-  if(Object.keys(answers).length>0){
-    html+=`<button class="reset-btn" onclick="resetAll()">Sıfırla</button>`;
-  }
-
-  html+=`<div class="footer"><strong>Matris bölgeleri:</strong> Core (sol alt, skor ≤2.3) = RTB | Adjacent (orta, 2.3–3.7) = CTB-Grow | Transformational (sağ üst, 3.7+) = CTB-Transform. Geçiş bölgeleri açık tonla gösterilir.<br>
-  <strong>Tag çoğunluk koruması:</strong> Cevapların %65+ aynı yönelimde (orn. Grow) ise skor o sınıfın üst sınırını aşamaz — birkaç yüksek puanlı cevabın skoru Transform'a çekmesi engellenir.<br>
-  <strong>Skor eşikleri:</strong> ≤2.0 → RTB-1/2 | 2.01–2.60 → RTB-2/3 | 2.61–3.40 → CTB-Grow | 3.41+ → CTB-Transform<br>
-  <strong>Kaynaklar:</strong> Gartner RGT, HSBC, Cisco Rapid Risk, Info-Tech, Execution Excellence, TBM/ITFM</div>`;
-
+  if(Object.keys(answers).length>0) html+=`<button class="reset-btn" onclick="resetAll()">Sıfırla</button>`;
+  html+=`<div class="footer"><strong>Matris:</strong> 3 ana bölge — Core (alt, RTB), Adjacent (orta, CTB-Grow), Transformational (üst, CTB-Transform). Nokta her cevapla güncellenir.<br>
+  <strong>Tag koruması:</strong> Cevapların %65+ aynı yönelimde ise skor o sınıfın üst sınırını aşamaz.<br>
+  <strong>Eşikler:</strong> ≤2.0 → RTB-1/2 | 2.01–2.60 → RTB-2/3 | 2.61–3.40 → CTB-Grow | 3.41+ → CTB-Transform</div>`;
   app.innerHTML=html;
 }
 
@@ -372,7 +343,6 @@ function selectOpt(qid,score){
   if(idx<questions.length-1)setTimeout(()=>cards[idx+1]?.scrollIntoView({behavior:"smooth",block:"center"}),100);
 }
 function resetAll(){Object.keys(answers).forEach(k=>delete answers[k]);render();window.scrollTo({top:0,behavior:"smooth"});}
-
 render();
 </script>
 </body>
