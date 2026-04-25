@@ -225,7 +225,7 @@ function importExcel(){
   inp.onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=ev=>{
     const wb=XLSX.read(ev.target.result,{type:'binary'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws);
     rows.forEach(r=>{savedProjects.push({name:r.Proje||"İsimsiz",score:r.Skor||0,rawScore:r.Skor||0,cls:r.Sınıf||"RTB-1",label:r.Etiket||r.Sınıf||"",x:r.X||null,y:r.Y||null,answers:{},date:r.Tarih||"",duration:r.Süre_Hafta||4,unit:r.Birim||UNITS[0],people:r.Kaynak_Kişi||1,priority:r.Öncelik||0});});
-    persist();alert(`${rows.length} proje yüklendi.`);renderPortfolio();};rd.readAsBinaryString(f);};inp.click();
+    persist();alert(`${rows.length} proje yüklendi.`);renderPortfolio();renderGantt();};rd.readAsBinaryString(f);};inp.click();
 }
 
 function switchTab(n){document.querySelectorAll('.top-tab').forEach((t,i)=>t.classList.toggle('act',i===n));document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('act',i===n));if(n===1)renderPortfolio();if(n===2)renderGantt();}
@@ -270,7 +270,7 @@ function resetAll(){Object.keys(answers).forEach(k=>delete answers[k]);render();
 let pieChart=null;
 function renderPortfolio(){
   const el=document.getElementById('page1'),P=savedProjects;
-  if(!P.length){el.innerHTML=`<div class="empty-port"><p style="font-size:40px;opacity:.3;margin-bottom:12px">📊</p><p>Henüz kaydedilmiş proje yok.</p><p style="font-size:12px;color:#aaa;margin-top:8px">İlk sekmede değerlendirip kaydedin.</p></div>`;return;}
+  if(!P.length){el.innerHTML=`<div class="empty-port"><p style="font-size:40px;opacity:.3;margin-bottom:12px">📊</p><p>Henüz kaydedilmiş proje yok.</p><p style="font-size:12px;color:#aaa;margin-top:8px">İlk sekmede değerlendirip kaydedin veya mevcut bir Excel dosyasından yükleyin.</p><div style="margin-top:20px"><button class="xls-btn" onclick="importExcel()" style="font-size:14px;padding:10px 24px">📤 Excel'den yükle</button></div></div>`;return;}
   const clsC={"RTB-1":0,"RTB-2":0,"RTB-3":0,"CTB-Grow":0,"CTB-Transform":0};P.forEach(p=>clsC[p.cls]=(clsC[p.cls]||0)+1);const tP=P.length;
   let h=`<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="xls-btn" onclick="exportExcel()">📥 Excel'e aktar</button><button class="xls-btn" onclick="importExcel()">📤 Excel'den yükle</button></div>`;
   h+=`<div class="port-stats"><div class="stat-card"><div class="num" style="color:#1B3A5C">${tP}</div><div class="lbl">Toplam</div></div><div class="stat-card"><div class="num" style="color:#548235">${clsC["RTB-1"]+clsC["RTB-2"]+clsC["RTB-3"]}</div><div class="lbl">RTB</div></div><div class="stat-card"><div class="num" style="color:#C55A11">${clsC["CTB-Grow"]}</div><div class="lbl">Grow</div></div><div class="stat-card"><div class="num" style="color:#7030A0">${clsC["CTB-Transform"]}</div><div class="lbl">Transform</div></div></div>`;
@@ -294,7 +294,7 @@ function hideTip(){document.getElementById('scatter-tip')?.classList.remove('vis
 // ============ TAB 3: GANTT ============
 function renderGantt(){
   const el=document.getElementById('page2'),P=savedProjects;
-  if(!P.length){el.innerHTML=`<div class="empty-port"><p style="font-size:40px;opacity:.3;margin-bottom:12px">📅</p><p>Gantt görünümü için önce proje kaydedin.</p></div>`;return;}
+  if(!P.length){el.innerHTML=`<div class="empty-port"><p style="font-size:40px;opacity:.3;margin-bottom:12px">📅</p><p>Gantt görünümü için önce proje kaydedin.</p><div style="margin-top:20px"><button class="xls-btn" onclick="importExcel()" style="font-size:14px;padding:10px 24px">📤 Excel'den yükle</button></div></div>`;return;}
   // Group by unit
   const units={};P.forEach((p,i)=>{const u=p.unit||"Atanmamış";if(!units[u])units[u]=[];units[u].push({...p,idx:i});});
   // Sort each unit by priority (lower = higher priority = earlier)
