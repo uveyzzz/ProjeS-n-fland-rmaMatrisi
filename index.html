@@ -164,12 +164,12 @@ const questions=[
 {id:8,dim:"Başarı Ölçümü",src:"Execution Excellence",w:5,q:"Başarı nasıl ölçülecek?",opts:[
 {s:1,l:"SLA, uptime, hata sayısı",t:"RTB"},{s:2,l:"Maliyet tasarrufu / risk azaltma (EUR)",t:"RTB"},{s:3,l:"Gelir artışı, cross-sell — gecikmeli göstergeler",t:"Grow"},{s:4,l:"Kullanıcı benimseme, NPS — öncü göstergeler",t:"Transform"},{s:5,l:"Hipotez doğrulama + kill criteria",t:"Transform"}]},
 {id:9,dim:"Bütçeleme",src:"Gartner Stage-Gate",w:5,q:"En uygun bütçeleme yaklaşımı?",opts:[
-{s:1,l:"Yıllık operasyonel bütçe içinde",t:"RTB"},{s:2,l:"Sabit bütçe — baştan belirli",t:"RTB"},{s:3,l:"Proje bazlı — business case sonrası",t:"Grow"},{s:4,l:"Aşama bazlı (stage-gate)",t:"Transform"},{s:5,l:"Discovery fonlaması — pivot opsiyonlu",t:"Transform"}]},
+{s:1,l:"Yıllık operasyonel bütçe içinde - in house efor",t:"RTB"},{s:2,l:"Sabit bütçe — 3. parti çözüm eforu ",t:"RTB"},{s:3,l:"Proje bazlı — business case sonrası",t:"Grow"},{s:4,l:"Aşama bazlı (stage-gate)",t:"Transform"},{s:5,l:"Discovery fonlaması — pivot opsiyonlu",t:"Transform"}]},
 {id:10,dim:"Düzenleyici / Uyumluluk",src:"TBM / ITFM",w:0,q:"Düzenleyici veya yasal uyumluluk boyutu var mı?",opts:[
 {s:-2,l:"Evet — yasal zorunluluk veya düzenleyici son tarih",t:"RTB"},{s:0,l:"Hayır — düzenleyici boyutu yok",t:"—"}]}
 ];
 
-const UNITS=["IT Altyapı","Yazılım Geliştirme","Dijital Dönüşüm","Veri & Analitik","Sistem & Network","ERP & Entegrasyon","Müşteri Deneyimi","Satış & Pazarlama IT"];
+const UNITS=["Dijital Çözümler","Dijital Dönüşüm","Operasyonel Çözümler ","Sistem ve Network"];
 
 const answers={};
 let savedProjects=JSON.parse(localStorage.getItem('pmo_projects2')||'[]');
