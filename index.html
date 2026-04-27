@@ -152,7 +152,7 @@ const questions=[
 ];
 
 const UNITS=["Dijital Çözümler","Dijital Dönüşüm","Operasyonel Çözümler","Sistem ve Network"];
-const DIRS=["Kurumsal İlişkiler Direktörlüğü","Pazarlama Direktörlüğü","Finans Direktörlüğü","Müşteri Deneyimi Direktörlüğü","Satış Sonrası Hizmetler Direktörlüğü","Bayi Yönetim Direktörlüğü","Araç Tedarik Zinciri Direktörlüğü","Bilgi Sistemleri Direktörlüğü","Çalışan Deneyimi Direktörlüğü","Lexus Direktörlüğü","Diğer"];
+const DIRS=["Satış Direktörlüğü","Pazarlama Direktörlüğü","Finans Direktörlüğü","Müşteri Deneyimi Direktörlüğü","Satış Sonrası Hizmetler Direktörlüğü","Bayi Yönetim Direktörlüğü","Araç Tedarik Zinciri Direktörlüğü","Bilgi Sistemleri Direktörlüğü","Çalışan Deneyimi Direktörlüğü","Lexus Direktörlüğü","Diğer"];
 const MONTHS_TR=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"];
 const answers={};
 let savedProjects=JSON.parse(localStorage.getItem('pmo_projects3')||'[]');
@@ -273,7 +273,7 @@ function renderPortfolio(){
   let h=`<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap"><button class="xls-btn" onclick="exportExcel()">📥 Excel'e aktar</button><button class="xls-btn" onclick="importExcel()">📤 Excel'den yükle</button></div>`;
   h+=`<div class="port-stats"><div class="stat-card"><div class="num" style="color:#1B3A5C">${tP}</div><div class="lbl">Toplam</div></div><div class="stat-card"><div class="num" style="color:#548235">${clsC["RTB-1"]+clsC["RTB-2"]+clsC["RTB-3"]}</div><div class="lbl">RTB</div></div><div class="stat-card"><div class="num" style="color:#C55A11">${clsC["CTB-Grow"]}</div><div class="lbl">Grow</div></div><div class="stat-card"><div class="num" style="color:#7030A0">${clsC["CTB-Transform"]}</div><div class="lbl">Transform</div></div>${unC?`<div class="stat-card"><div class="num" style="color:#888">${unC}</div><div class="lbl">Sınıflandırılmamış</div></div>`:""}</div>`;
   h+=`<div class="chart-row"><div class="chart-col"><h3>Portföy matrisi</h3><div class="matrix-outer"><div style="position:relative"><div class="y-label">İnovasyon derinliği →</div><div class="matrix-wrap" id="scatter-matrix" style="min-height:360px">${matrixZones()}${matrixGrid()}`;
-  P.forEach((p,i)=>{if(p.x==null||p.y==null)return;const xN=(p.x-1)/4,yN=(p.y-1)/4;h+=`<div class="scatter-dot" style="left:calc(${xN*100}% - 7px);top:calc(${(1-yN)*100}% - 7px);background:${CC[p.cls]||"#999"}" onmouseenter="showTip(event,${i})" onmouseleave="hideTip()"></div>`;});
+  P.forEach((p,i)=>{let px=p.x,py=p.y;if(px==null||py==null){const base={"RTB-1":[1.3,1.3],"RTB-2":[1.8,1.8],"RTB-3":[2.5,2.2],"CTB-Grow":[3.2,3.2],"CTB-Transform":[4.3,4.3]};const b=base[p.cls]||[2.5,2.5];const jx=(Math.sin(i*7+1)*0.4);const jy=(Math.cos(i*11+3)*0.4);px=Math.max(1,Math.min(5,b[0]+jx));py=Math.max(1,Math.min(5,b[1]+jy));}const xN=(px-1)/4,yN=(py-1)/4;h+=`<div class="scatter-dot" style="left:calc(${xN*100}% - 7px);top:calc(${(1-yN)*100}% - 7px);background:${CC[p.cls]||"#999"}" onmouseenter="showTip(event,${i})" onmouseleave="hideTip()"></div>`;});
   h+=`<div class="scatter-tooltip" id="scatter-tip"></div></div></div><div class="x-label-row"><span>İş modeli değişimi →</span><span>${tP} proje</span></div></div></div>`;
   h+=`<div class="chart-col"><h3>Sınıf dağılımı</h3><div class="pie-wrap"><canvas id="pie-chart"></canvas></div></div></div>`;
   // List with dropdown
